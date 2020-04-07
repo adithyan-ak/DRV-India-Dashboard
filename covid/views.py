@@ -9,9 +9,8 @@ import datetime
 from bs4 import BeautifulSoup
 
 def index(request):
-  
-  response = requests.get('https://api.covid19india.org/data.json')
 
+  response = requests.get('https://api.covid19india.org/data.json')
   resp = response.json()
 
  # India count
@@ -48,9 +47,9 @@ def index(request):
   recovered_tamilnadu = tamilnadu['recovered']
 
   dead_tamilnadu = tamilnadu['deaths']
- 
+
  #world count
-  
+
   world_response = requests.get('https://www.worldometers.info/coronavirus/')
 
 
@@ -72,7 +71,7 @@ def index(request):
   daily_cases = resp['cases_time_series']
   tot_length = len(daily_cases)
 
-  today_case = int(resp['key_values'][0]['confirmeddelta'])
+  today_case = int(resp['statewise'][0]['deltaconfirmed'])
 
   sterday_confirmed = int(daily_cases[tot_length-1]['dailyconfirmed'])
 
@@ -84,7 +83,7 @@ def index(request):
 
   sterday4_confirmed = int(daily_cases[tot_length-5]['dailyconfirmed'])
 
-# Time calculation 
+# Time calculation
 
   tdy = datetime.datetime.today()
   today = (tdy.strftime("%d")+' '+(tdy.strftime("%B")))
@@ -114,6 +113,25 @@ def index(request):
   tn_districts = districtwise['Tamil Nadu']['districtData']
   tot_districts = len(tn_districts)
 
+  tot_districts = len(tn_districts)
+  t=tn_districts
+  key=0
+  final={}
+  ar=list(t.keys())
+  temp=0
+  while(len(list(t.keys()))!=0):
+	  key=0
+	  ar=list(t.keys())
+	  temp=0
+	  for i in range(len(ar)-1):
+		  for j in range(i+1,len(ar)):
+			  #print(t[ar[i]]['confirmed'])
+			  if t[ar[i]]['confirmed']>temp:
+				  temp=t[ar[i]]['confirmed']
+				  key=i
+	  final[ar[key]]=t[ar[key]]
+	  del t[ar[key]]
+
+  tn_districts=final
 
   return render(request, 'index.html',{'total_india':total_india,'active_india':active_india,'recovered_india':recovered_india,'dead_india':dead_india,'updated_time_india':updated_time_india, 'total_tamilnadu':total_tamilnadu,'active_tamilnadu':active_tamilnadu,'recovered_tamilnadu':recovered_tamilnadu,'dead_tamilnadu':dead_tamilnadu, 'total_world':total_world, 'world_active_cases':world_active_cases, 'total_world_death':total_world_death,'total_world_recovered':total_world_recovered,'today':today,'yesterday':yesterday,'yesterday1':yesterday1,'yesterday2':yesterday2,'yesterday3':yesterday3,'yesterday4':yesterday4,'today_case':today_case,'sterday_confirmed':sterday_confirmed,'sterday1_confirmed':sterday1_confirmed,'sterday2_confirmed':sterday2_confirmed,'sterday3_confirmed':sterday3_confirmed,'sterday4_confirmed':sterday4_confirmed,'tn_districts':tn_districts,'tot_districts':tot_districts})
-
