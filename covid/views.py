@@ -54,9 +54,9 @@ def index(request):
   daily_cases = resp['cases_time_series']
   tot_length = len(daily_cases)
 
-  today_case = int(resp['statewise'][0]['deltaconfirmed'])
-
   last_updated_time = resp['statewise'][0]['lastupdatedtime']
+
+  today_case = int(resp['statewise'][0]['deltaconfirmed'])
 
   sterday_confirmed = int(daily_cases[tot_length-1]['dailyconfirmed'])
 
@@ -67,6 +67,34 @@ def index(request):
   sterday3_confirmed = int(daily_cases[tot_length-4]['dailyconfirmed'])
 
   sterday4_confirmed = int(daily_cases[tot_length-5]['dailyconfirmed'])
+
+  #--------------------------------------------------------------------------
+  today_death = int(resp['statewise'][0]['deltadeaths'])
+
+  sterday_death = int(daily_cases[tot_length-1]['dailydeceased'])
+
+  sterday1_death = int(daily_cases[tot_length-2]['dailydeceased'])
+
+  sterday2_death = int(daily_cases[tot_length-3]['dailydeceased'])
+
+  sterday3_death = int(daily_cases[tot_length-4]['dailydeceased'])
+
+  sterday4_death = int(daily_cases[tot_length-5]['dailydeceased'])
+
+   #--------------------------------------------------------------------------
+  today_recovered = int(resp['statewise'][0]['deltarecovered'])
+
+  sterday_recovered = int(daily_cases[tot_length-1]['dailyrecovered'])
+
+  sterday1_recovered = int(daily_cases[tot_length-2]['dailyrecovered'])
+
+  sterday2_recovered = int(daily_cases[tot_length-3]['dailyrecovered'])
+
+  sterday3_recovered = int(daily_cases[tot_length-4]['dailyrecovered'])
+
+  sterday4_recovered = int(daily_cases[tot_length-5]['dailyrecovered'])
+
+ #--------------------------------------------------------------------------
 
 # Time calculation
 
@@ -95,4 +123,7 @@ def index(request):
               statewise[j]=statewise[j+1]
               statewise[j+1]=temp
 
-  return render(request, 'index.html',{'total_india':total_india,'active_india':active_india,'recovered_india':recovered_india,'dead_india':dead_india,'updated_time_india':updated_time_india, 'total_world':total_world, 'world_active_cases':world_active_cases, 'total_world_death':total_world_death,'total_world_recovered':total_world_recovered,'today':today,'yesterday':yesterday,'yesterday1':yesterday1,'yesterday2':yesterday2,'yesterday3':yesterday3,'yesterday4':yesterday4,'today_case':today_case,'sterday_confirmed':sterday_confirmed,'sterday1_confirmed':sterday1_confirmed,'sterday2_confirmed':sterday2_confirmed,'sterday3_confirmed':sterday3_confirmed,'sterday4_confirmed':sterday4_confirmed,'statewise':statewise, 'last_updated_time':last_updated_time})
+  return render(request, 'index.html',{'total_india':total_india,'active_india':active_india,'recovered_india':recovered_india,'dead_india':dead_india,'updated_time_india':updated_time_india, 'total_world':total_world, 'world_active_cases':world_active_cases, 'total_world_death':total_world_death,'total_world_recovered':total_world_recovered,'today':today,'yesterday':yesterday,'yesterday1':yesterday1,'yesterday2':yesterday2,'yesterday3':yesterday3,'yesterday4':yesterday4,'today_case':today_case,'sterday_confirmed':sterday_confirmed,'sterday1_confirmed':sterday1_confirmed,'sterday2_confirmed':sterday2_confirmed,'sterday3_confirmed':sterday3_confirmed,'sterday4_confirmed':sterday4_confirmed,'statewise':statewise,
+  'sterday_recovered':sterday_recovered,'sterday1_recovered':sterday1_recovered,'sterday2_recovered':sterday2_recovered,'sterday3_recovered':sterday3_recovered,'sterday4_recovered':sterday4_recovered,'today_recovered':today_recovered,
+  'sterday_death':sterday_death,'sterday1_death':sterday1_death,'sterday2_death':sterday2_death,'sterday3_death':sterday3_death,'sterday4_death':sterday4_death,'today_death':today_death,
+   'last_updated_time':last_updated_time})
