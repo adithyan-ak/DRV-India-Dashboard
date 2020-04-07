@@ -35,9 +35,9 @@ The application is running live here : https://covidin.herokuapp.com
 
 For running this Django Project in local machine, Clone the project into any directory
 
-```git clone https://github.com/adithyan-ak/Covid19-Dashboard.git```
+```git clone https://github.com/adithyan-ak/DRV-India-Dashboard.git```
 
-```cd Covid19-Dashboard```
+```cd DRV-India-Dashboard```
 
 Install the required python libraries from requirements.txt file
 
@@ -64,4 +64,3 @@ Visit http://127.0.0.1:8000/ in your browser to see the Dashboard.
   District wise Reports
   <br>
 </h5>
-# DRV-India-Dashboard
