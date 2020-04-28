@@ -51,56 +51,84 @@ def index(request):
 
   # Daily cases chart
 
+  confirmed_cases_per_day = []
   daily_cases = resp['cases_time_series']
   tot_length = len(daily_cases)
-
   last_updated_time = resp['statewise'][0]['lastupdatedtime']
-
-  today_case = int(resp['statewise'][0]['deltaconfirmed'])
-  sterday_confirmed = int(daily_cases[tot_length-1]['dailyconfirmed'])
-  sterday1_confirmed = int(daily_cases[tot_length-2]['dailyconfirmed'])
-  sterday2_confirmed = int(daily_cases[tot_length-3]['dailyconfirmed'])
-  sterday3_confirmed = int(daily_cases[tot_length-4]['dailyconfirmed'])
-  sterday4_confirmed = int(daily_cases[tot_length-5]['dailyconfirmed'])
-  sterday5_confirmed = int(daily_cases[tot_length-6]['dailyconfirmed'])
-  sterday6_confirmed = int(daily_cases[tot_length-7]['dailyconfirmed'])
-  sterday7_confirmed = int(daily_cases[tot_length-8]['dailyconfirmed'])
-  sterday8_confirmed = int(daily_cases[tot_length-9]['dailyconfirmed'])
+  confirmed_cases_per_day.append(int(resp['statewise'][0]['deltaconfirmed']))
+  for i in range(1, tot_length):
+    confirmed_cases_per_day.append(int(daily_cases[tot_length-i]['dailyconfirmed']))
+  print("confirmed cases")
+  print(confirmed_cases_per_day)
+  print(len(confirmed_cases_per_day))
 
   #--------------------------------------------------------------------------
-  today_death = int(resp['statewise'][0]['deltadeaths'])
-  sterday_death = int(daily_cases[tot_length-1]['dailydeceased'])
+
+  deaths_per_day = [] 
+  deaths_per_day.append(int(resp['statewise'][0]['deltadeaths']))
+  for i in range(1, tot_length):
+    deaths_per_day.append(int(daily_cases[tot_length-i]['dailydeceased']))
+  print("deaths")
+  print(deaths_per_day)
+  print(len(deaths_per_day))
+  '''
   sterday1_death = int(daily_cases[tot_length-2]['dailydeceased'])
+
   sterday2_death = int(daily_cases[tot_length-3]['dailydeceased'])
+
   sterday3_death = int(daily_cases[tot_length-4]['dailydeceased'])
+
   sterday4_death = int(daily_cases[tot_length-5]['dailydeceased'])
+
   sterday5_death = int(daily_cases[tot_length-6]['dailydeceased'])
+
   sterday6_death = int(daily_cases[tot_length-7]['dailydeceased'])
+
   sterday7_death = int(daily_cases[tot_length-8]['dailydeceased'])
+
   sterday8_death = int(daily_cases[tot_length-9]['dailydeceased'])
-
+  '''
    #--------------------------------------------------------------------------
-  today_recovered = int(resp['statewise'][0]['deltarecovered'])
-  sterday_recovered = int(daily_cases[tot_length-1]['dailyrecovered'])
-  sterday1_recovered = int(daily_cases[tot_length-2]['dailyrecovered'])
-  sterday2_recovered = int(daily_cases[tot_length-3]['dailyrecovered'])
-  sterday3_recovered = int(daily_cases[tot_length-4]['dailyrecovered'])
-  sterday4_recovered = int(daily_cases[tot_length-5]['dailyrecovered'])
-  sterday5_recovered = int(daily_cases[tot_length-6]['dailyrecovered'])
-  sterday6_recovered = int(daily_cases[tot_length-7]['dailyrecovered'])
-  sterday7_recovered = int(daily_cases[tot_length-8]['dailyrecovered'])
-  sterday8_recovered = int(daily_cases[tot_length-9]['dailyrecovered'])
 
+  recovered_cases_per_day = []
+  recovered_cases_per_day.append(int(resp['statewise'][0]['deltarecovered']))
+  for i in range(1, tot_length):
+    recovered_cases_per_day.append(int(daily_cases[tot_length-i]['dailyrecovered']))
+  print("recovered cases")
+  print(recovered_cases_per_day)
+  print(len(recovered_cases_per_day))
+  '''
+  sterday1_recovered = int(daily_cases[tot_length-2]['dailyrecovered'])
+
+  sterday2_recovered = int(daily_cases[tot_length-3]['dailyrecovered'])
+
+  sterday3_recovered = int(daily_cases[tot_length-4]['dailyrecovered'])
+
+  sterday4_recovered = int(daily_cases[tot_length-5]['dailyrecovered'])
+
+  sterday5_recovered = int(daily_cases[tot_length-6]['dailyrecovered'])
+
+  sterday6_recovered = int(daily_cases[tot_length-7]['dailyrecovered'])
+
+  sterday7_recovered = int(daily_cases[tot_length-8]['dailyrecovered'])
+
+  sterday8_recovered = int(daily_cases[tot_length-9]['dailyrecovered'])
+  '''
  #--------------------------------------------------------------------------
 
 # Time calculation
-
+  
+  corona_days = []
+  for i in range(tot_length-1,0,-1):
+    ster = datetime.datetime.today() - datetime.timedelta(days=i)
+    corona_days.append((ster.strftime("%d")+' '+(ster.strftime("%b"))))
   tdy = datetime.datetime.today()
-  today = (tdy.strftime("%d")+' '+(tdy.strftime("%B")))
-
-  ster = datetime.datetime.today() - datetime.timedelta(days=1)
-  yesterday = (ster.strftime("%d")+' '+(ster.strftime("%B")))
-
+  corona_days.append((tdy.strftime("%d")+' '+(tdy.strftime("%b"))))
+  print("days")
+  print(corona_days)
+  print(len(corona_days))
+  
+  '''
   ster1 = datetime.datetime.today() - datetime.timedelta(days=2)
   yesterday1 = (ster1.strftime("%d")+' '+(ster1.strftime("%B")))
 
@@ -124,7 +152,7 @@ def index(request):
 
   ster8 = datetime.datetime.today() - datetime.timedelta(days=9)
   yesterday8 = (ster8.strftime("%d")+' '+(ster8.strftime("%B")))
-
+  '''
   for i in range(0,len(statewise)):
       for j in range(0,len(statewise)-i-1):
           if int(statewise[j]['confirmed']) < int(statewise[j+1]['confirmed']) :
@@ -132,5 +160,4 @@ def index(request):
               statewise[j]=statewise[j+1]
               statewise[j+1]=temp
 
-  return render(request, 'index.html',{'total_india':total_india,'active_india':active_india,'recovered_india':recovered_india,'dead_india':dead_india,'updated_time_india':updated_time_india, 'total_world':total_world, 'world_active_cases':world_active_cases, 'total_world_death':total_world_death,'total_world_recovered':total_world_recovered,'today':today,'yesterday':yesterday,'yesterday1':yesterday1,'yesterday2':yesterday2,'yesterday3':yesterday3,'yesterday4':yesterday4,'yesterday5':yesterday5,'yesterday6':yesterday6,'yesterday7':yesterday7,'yesterday8':yesterday8,'today_case':today_case,'sterday_confirmed':sterday_confirmed,'sterday1_confirmed':sterday1_confirmed,'sterday2_confirmed':sterday2_confirmed,'sterday3_confirmed':sterday3_confirmed,'sterday4_confirmed':sterday4_confirmed,'sterday5_confirmed':sterday5_confirmed,'sterday6_confirmed':sterday6_confirmed,'sterday7_confirmed':sterday7_confirmed,'sterday8_confirmed':sterday8_confirmed,'statewise':statewise,'sterday_recovered':sterday_recovered,'sterday1_recovered':sterday1_recovered,'sterday2_recovered':sterday2_recovered,'sterday3_recovered':sterday3_recovered,'sterday4_recovered':sterday4_recovered,'sterday5_recovered':sterday5_recovered,'sterday6_recovered':sterday6_recovered,'sterday7_recovered':sterday7_recovered,'sterday8_recovered':sterday8_recovered,'today_recovered':today_recovered,'sterday_death':sterday_death,'sterday1_death':sterday1_death,'sterday2_death':sterday2_death,'sterday3_death':sterday3_death,'sterday4_death':sterday4_death,'sterday5_death':sterday5_death,'sterday6_death':sterday6_death,'sterday7_death':sterday7_death,'sterday8_death':sterday8_death,'today_death':today_death,'last_updated_time':last_updated_time})
-
+  return render(request, 'index.html',{'total_india':total_india,'active_india':active_india,'recovered_india':recovered_india,'dead_india':dead_india,'updated_time_india':updated_time_india, 'total_world':total_world, 'world_active_cases':world_active_cases, 'total_world_death':total_world_death,'total_world_recovered':total_world_recovered,'corona_days':corona_days,'confirmed_cases_per_day':confirmed_cases_per_day,'statewise':statewise,'recovered_cases_per_day':recovered_cases_per_day,'deaths_per_day':deaths_per_day,'last_updated_time':last_updated_time})

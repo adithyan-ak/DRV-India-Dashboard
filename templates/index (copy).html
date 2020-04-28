@@ -21,18 +21,18 @@
       <table class="table table-borderless text-center">
          <thead>
             <tr>
-               <th scope="col" style="border:0.25px solid #8b8b8b;background:rgba(128,128,128,0.25);width:49%">
+               <th scope="col" style="border:0.5px solid #8b8b8b;background:rgba(128,128,128,0.25);width:49%">
                   <h4 class="my-0 font-weight-normal">India</h4>
                   </td>
                <th scope="col" style="width:2%"></td>
-               <th scope="col" style="border:0.25px solid #8b8b8b;background:rgba(128,128,128,0.25);width:49%">
+               <th scope="col" style="border:0.5px solid #8b8b8b;background:rgba(128,128,128,0.25);width:49%">
                   <h4 class="my-0 font-weight-normal">World</h4>
                   </td> 
             </tr>
          </thead>
          <tbody>
             <tr>
-               <td style="border:0.25px solid #8b8b8b">
+               <td style="border:0.5px solid #8b8b8b">
                   <h1 class="card-title pricing-card-title">{{total_india}}</h1>
                   <ul class="list-unstyled mt-3 mb-4">
                      <li>Active : {{active_india}}</li>
@@ -41,7 +41,7 @@
                   </ul>
                </td>
                <td></td>
-               <td style="border:0.25px solid #8b8b8b">
+               <td style="border:0.5px solid #8b8b8b">
                   <h1 class="card-title pricing-card-title">{{total_world}}</h1>
                   <ul class="list-unstyled mt-3 mb-4">
                      <li>Active : {{world_active_cases}}</li>
@@ -59,6 +59,34 @@
 <div class="container">
   <div class="card-deck mb-3 text-center">
 
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">India</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title">{{total_india}}</h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>Active : {{active_india}}</li>
+          <li>Recovered : {{recovered_india}}</li>
+          <li>Dead : {{dead_india}}</li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">World</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title">{{total_world}}</h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>Active : {{world_active_cases}}</li>
+          <li>Recovered : {{total_world_recovered}}</li>
+          <li>Dead : {{total_world_death}}</li>
+        </ul>
+
+      </div>
+    </div>
   </div>
   <div id="container"></div>
   <script src="{% static 'js/highcharts.src.js' %}"></script>
@@ -98,44 +126,39 @@
 <br>
   <!-- Table India Statewise Report-->
 
-<!--  <div class="card mb-4 shadow-sm">
+  <div class="card mb-4 shadow-sm">
     <div class="card-header">
       <h5 class="my-0 font-weight-normal"><center>India State wise Report</center></h5>
     </div>
--->
+
 
   <br>
-  <div class="container">
+
   <table class="table table-striped table-light">
-  <!--<colgroup>
+  <colgroup>
     <col class="col-md-4">
     <col class="col-md-2">
     <col class="col-md-2">
     <col class="col-md-2">
     <col class="col-md-2">
-  </colgroup>-->
+  </colgroup>
   <thead>
   <tr>
-    <th colspan="5" style="border:0.25px solid #8b8b8b;background:rgba(128,128,128,0.25);">
-      <h5 class="my-0 font-weight-normal"><center>India State wise Report</center></h5>
-    </th>
-  </tr>
-  <tr>
-    <th scope="col" style="border:0.25px solid #8b8b8b;width:35%">State</th>
-    <th scope="col" style="border:0.25px solid #8b8b8b;width:16.25%">Confirmed</th>
-    <th scope="col" style="border:0.25px solid #8b8b8b;width:16.25%">Active</th>
-    <th scope="col" style="border:0.25px solid #8b8b8b;width:16.25%">Recovered</th>
-    <th scope="col" style="border:0.25px solid #8b8b8b;width:16.25%">Dead</th>
+    <th scope="col">State</th>
+    <th scope="col">Confirmed</th>
+    <th scope="col">Active</th>
+    <th scope="col">Recovered</th>
+    <th scope="col">Dead</th>
   </tr>
   </thead>
-  <tbody style="border:0.25px solid #8b8b8b;">
+  <tbody>
   {% for key in statewise %}
   <tr>
     <th scope="row">{{key.state}}</th>
-    <td scope="row" style="background:rgba(255,0,0,0.25)">{{key.confirmed}}</td>
-    <td scope="row" style="background:rgba(255,165,0,0.25)">{{key.active}}</td>
-    <td scope="row" style="background:rgba(0,255,0,0.25)">{{key.recovered}}</td>
-    <td scope="row" style="background:rgba(128,128,128,0.25)">{{key.deaths}}</td>
+    <td style="background:rgba(255,0,0,0.25)">{{key.confirmed}}</td>
+    <td style="background:rgba(255,165,0,0.25)">{{key.active}}</td>
+    <td style="background:rgba(0,255,0,0.25)">{{key.recovered}}</td>
+    <td style="background:rgba(128,128,128,0.25)">{{key.deaths}}</td>
   </tr>
   {% endfor %}
   </tbody>
